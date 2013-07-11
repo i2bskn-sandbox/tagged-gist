@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130711113416) do
+ActiveRecord::Schema.define(version: 20130711132328) do
 
   create_table "gists", force: true do |t|
     t.string   "gid"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20130711113416) do
   end
 
   add_index "gists", ["gid"], name: "index_gists_on_gid", unique: true
+
+  create_table "tags", force: true do |t|
+    t.string   "name",       limit: 20
+    t.integer  "user_id"
+    t.integer  "gist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name"
+  add_index "tags", ["user_id"], name: "index_tags_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "uid"

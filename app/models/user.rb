@@ -1,5 +1,17 @@
 class User < ActiveRecord::Base
-  has_many :gists
+  has_many :gists, dependent: :destroy
+  has_many :tags, dependent: :destroy
+
+  def update_with_omniauth(auth)
+    update_attributes!(
+      uid: auth[:uid],
+      nickname: auth[:info][:nickname],
+      email: auth[:info][:email],
+      image_url: auth[:info][:image],
+      github_url: auth[:info][:urls][:GitHub],
+      access_token: auth[:credentials][:token]
+    )
+  end
   
   class << self
     def create_with_omniauth(auth)

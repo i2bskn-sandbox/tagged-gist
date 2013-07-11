@@ -1,4 +1,5 @@
 class Gist < ActiveRecord::Base
+  has_many :tags, dependent: :destroy
   belongs_to :user
 
   class << self

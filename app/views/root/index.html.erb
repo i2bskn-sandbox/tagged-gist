@@ -1,9 +1,22 @@
+<% if @current_user %>
 <% if @gists.count > 0 %>
 
 <% @gists.each do |g| %>
 <div class="well">
   <h5><%= link_to "Gist: #{g.gid}", gists_show_path(g) %></h5>
+  <% g.tags.each do |tag| %>
+  <span class="label label-info"><%= tag.name %></span>
+  <% end %>
   <p><%= g.description %></p>
+  <%= form_tag gists_tagged_path(g), class: "form-inline" do %>
+  <%= text_field_tag "name", nil, class: "input-small", placeholder: "Tag Name", required: true %>
+  <%= submit_tag "Tagging", class: "btn btn-small" %>
+  <% end %>
+
+  <% if @current_tag %>
+  <p><%= link_to "Untagging #{@current_tag}", gists_untagged_path(id: g.id, name: @current_tag), method: :delete, data: {confirm: "Are you sure?"} %></p>
+  <% end %>
+
   <%= link_to "GitHub", g.html_url, target: "_blank" %>
 </div>
 <% end %>
@@ -14,4 +27,5 @@
   <p>Gists are not synchronized.</p>
 </div>
 
+<% end %>
 <% end %>
