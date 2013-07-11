@@ -7,9 +7,31 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
 
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+<div class="container-fluid">
+
+<%= link_to "Tagged Gist", root_path, class: "brand" %>
+
+<ul class="nav pull-right">
+  <% if @current_user %>
+  <li><%= link_to "Sign out", signout_path %></li>
+  <% else %>
+  <li><%= link_to "Sign in with GitHub", "/auth/github" %></li>
+  <% end %>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="container-fluid">
+
 <%= yield %>
+
+</div>
 
 </body>
 </html>
