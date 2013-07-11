@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 
 gem 'omniauth-github'
+gem 'octokit'
 
 group :doc do
   gem 'sdoc', require: false
