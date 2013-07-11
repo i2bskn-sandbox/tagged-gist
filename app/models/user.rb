@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :gists
+  
   class << self
     def create_with_omniauth(auth)
       create! do |user|

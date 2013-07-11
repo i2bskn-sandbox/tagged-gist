@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130711035913) do
+ActiveRecord::Schema.define(version: 20130711113416) do
+
+  create_table "gists", force: true do |t|
+    t.string   "gid"
+    t.string   "description"
+    t.string   "html_url"
+    t.string   "embed_url"
+    t.boolean  "public_gist"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "gists", ["gid"], name: "index_gists_on_gid", unique: true
 
   create_table "users", force: true do |t|
     t.string   "uid"

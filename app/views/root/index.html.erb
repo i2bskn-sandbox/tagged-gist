@@ -1,42 +1,17 @@
-<div class="row-fluid">
+<% if @gists.count > 0 %>
 
-<% if @current_user %>
-<div class="span2">
+<% @gists.each do |g| %>
 <div class="well">
-  <h4>Profile</h4>
-  <%= image_tag @current_user.image_url, class: "img-polaroid" %><br><br>
-  <%= @current_user.nickname %><br>
-  <%= @current_user.email %><br>
-  <%= link_to "Sync Gists", "#", class: "btn" %>
+  <h5><%= link_to "Gist: #{g.gid}", gists_show_path(g) %></h5>
+  <p><%= g.description %></p>
+  <%= link_to "GitHub", g.html_url, target: "_blank" %>
 </div>
-
-<div class="well">
-  <h4>Tags</h4>
-  <%= link_to "All", "#" %><br>
-  <%= link_to "Tag1", "#" %><br>
-  <%= link_to "Tag2", "#" %><br>
-  <%= link_to "Tag3", "#" %><br>
-  <%= link_to "Tag4", "#" %><br>
-  <%= link_to "Tag5", "#" %><br>
-  <%= link_to "Tag6", "#" %><br>
-  <%= link_to "Tag7", "#" %><br>
-</div>
-</div>
-
-<div class="span8">
-  <div class="well">
-    <h5>なんか書く</h5>
-  </div>
-</div>
-
-<div class="span2">
-  <div class="well">
-    <h5>なんか書く</h5>
-  </div>
-</div>
-
-<% else %>
-<h1>Please sign in.</h1>
 <% end %>
 
+<% else %>
+
+<div class="well">
+  <p>Gists are not synchronized.</p>
 </div>
+
+<% end %>
