@@ -1,3 +1,9 @@
+Tagged Gist
+===========
+
+[![Code Climate](https://codeclimate.com/github/i2bskn/tagged-gist.png)](https://codeclimate.com/github/i2bskn/tagged-gist)
+[![Dependency Status](https://gemnasium.com/i2bskn/tagged-gist.png)](https://gemnasium.com/i2bskn/tagged-gist)
+
 
 Creating...
 
