@@ -2,6 +2,14 @@ class User < ActiveRecord::Base
   has_many :gists, dependent: :destroy
   has_many :tags, dependent: :destroy
 
+  def tag_labels
+    labels = Set.new
+    tags.each do |tag|
+      labels.add(tag.name)
+    end
+    labels.to_a
+  end
+
   def update_with_omniauth(auth)
     update_attributes!(
       uid: auth[:uid],

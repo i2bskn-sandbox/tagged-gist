@@ -1,29 +1,18 @@
 class GistsController < ApplicationController
   before_action :require_signin
+  before_action :require_gist_exists, except: [:sync]
 
   # GET /gists/1
   def show
-    begin
-      @gist = Gist.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
-    end
-
     if !@gist.public_gist && @gist.user != @current_user
       render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
     end
 
-    @tags = get_tags(@current_user)
+    @tags = @current_user.tag_labels
   end
 
   # POST /gists/1/tagged
   def tagged
-    begin
-      @gist = Gist.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
-    end
-
     if @gist.user != @current_user
       render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
     end
@@ -41,12 +30,6 @@ class GistsController < ApplicationController
 
   # DELETE /gists/1/untagged
   def untagged
-    begin
-      @gist = Gist.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
-    end
-
     tag = Tag.where("user_id = :uid AND gist_id = :gid AND name = :name", {uid: @current_user.id, gid: @gist.id, name: params[:name]})
     tag.first.destroy
     redirect_to root_path, notice: "The untagging of gist is successful."
@@ -74,5 +57,14 @@ class GistsController < ApplicationController
     end
 
     redirect_to root_path
+  end
+
+  private
+  def require_gist_exists
+    begin
+      @gist = Gist.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
+    end
   end
 end
