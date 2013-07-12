@@ -1,0 +1,28 @@
+body {
+  padding: 10px;
+}
+
+a {
+  color: #79accd;
+  text-decoration: none;
+}
+
+.navbar-inner {
+  background: #fff;
+  border: 0;
+  box-shadow: none;
+}
+
+footer .footer-border {
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+}
+
+footer .row {
+  margin-top: 16px;
+}
+
+footer .copylight {
+  text-align: center;
+  color: #aaa;
+}

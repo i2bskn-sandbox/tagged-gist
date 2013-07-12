@@ -1,31 +1,31 @@
 <% if @current_user %>
 <% if @gists.count > 0 %>
-
+<ul class="thumbnails">
 <% @gists.each do |g| %>
-<div class="well">
-  <h5><%= link_to "Gist: #{g.gid}", gists_show_path(g) %></h5>
-  <% g.tags.each do |tag| %>
-  <span class="label label-info"><%= tag.name %></span>
-  <% end %>
-  <p><%= g.description %></p>
-  <%= form_tag gists_tagged_path(g), class: "form-inline" do %>
-  <%= text_field_tag "name", nil, class: "input-small", placeholder: "Tag Name", required: true %>
-  <%= submit_tag "Tagging", class: "btn btn-small" %>
-  <% end %>
+  <li class="span4">
+    <div class="well">
+      <h5><%= link_to "Gist: #{g.gid}", gists_show_path(g) %></h5>
+      <% g.tags.each do |tag| %>
+      <span class="label label-info"><i class="icon-tag icon-white"></i> <%= tag.name %></span>
+      <% end %>
+      <p><%= g.description %></p>
+      <%= form_tag gists_tagged_path(g), class: "form-inline" do %>
+      <%= text_field_tag "name", nil, class: "input-small", placeholder: "Tag Name", required: true %>
+      <%= submit_tag "Tagging", class: "btn btn-small" %>
+      <% end %>
 
-  <% if @current_tag %>
-  <p><%= link_to "Untagging #{@current_tag}", gists_untagged_path(id: g.id, name: @current_tag), method: :delete, data: {confirm: "Are you sure?"} %></p>
-  <% end %>
+      <% if @current_tag %>
+      <p><%= link_to "Untagging #{@current_tag}", gists_untagged_path(id: g.id, name: @current_tag), method: :delete, data: {confirm: "Are you sure?"} %></p>
+      <% end %>
 
-  <%= link_to "GitHub", g.html_url, target: "_blank" %>
-</div>
+      <%= link_to "GitHub", g.html_url, target: "_blank" %>
+    </div>
+  </li>
 <% end %>
-
+</ul>
 <% else %>
-
-<div class="well">
-  <p>Gists are not synchronized.</p>
+<div class="span12">
+  <p class="text-error">Gists are not synchronized. Please click Sync Gist or register Gist.</p>
 </div>
-
 <% end %>
 <% end %>
