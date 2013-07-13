@@ -1,4 +1,5 @@
 class RootController < ApplicationController
+  # GET /
   def index
     if @current_user
       if params[:tag].nil?
