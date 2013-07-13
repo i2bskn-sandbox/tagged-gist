@@ -7,33 +7,41 @@ Tagged Gist
 [![Dependency Status](https://gemnasium.com/i2bskn/tagged-gist.png)](https://gemnasium.com/i2bskn/tagged-gist)
 
 
-Creating...
+Web application to tag the Gists.
 
-== README
+#### Application on Heroku
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[https://tagged-gist.herokuapp.com](https://tagged-gist.herokuapp.com)
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+* Ruby 2.0.0
+* PostgreSQL
 
-* System dependencies
+## Configuration
 
-* Configuration
+#### Sessions secret key
 
-* Database creation
+```
+export RAILS_SECRET_KEY=rails_secret_key_base
+```
 
-* Database initialization
+#### GitHub Application config
 
-* How to run the test suite
+```
+export GITHUB_KEY=your_app_client_id
+export GITHUB_SECRET=your_app_client_secret
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Deproyment instructions
 
-* Deployment instructions
+#### for Heroku
 
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+```
+heroku create
+heroku config:set RAILS_SECRET_KEY=rails_secret_key_base
+heroku config:set GITHUB_KEY=your_app_client_id
+heroku config:set GITHUB_SECRET=your_app_client_secret
+git push heroku master
+heroku open
+```
