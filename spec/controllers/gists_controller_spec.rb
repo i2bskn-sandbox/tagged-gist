@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe GistsController do
-  describe "GET show" do
-    let(:gist_object) {FactoryGirl.create(:gist)}
+  let(:gist_object) {FactoryGirl.create(:gist)}
 
+  describe "GET show" do
     context "with sign in" do
       let!(:tag) do
         tag = Tag.create!(name: "tag", user_id: gist_object.user.id, gist_id: gist_object.id)
@@ -42,6 +42,44 @@ describe GistsController do
         g = FactoryGirl.create(:gist)
         g.update_attributes!(public_gist: false)
         get :show, {id: g.id}, {user: gist_object.user.id}
+        expect(response.status).to eq(404)
+      end
+    end
+  end
+
+  describe "GET sync" do
+    context "with sign in" do
+      let(:client) {double("client mock").as_null_object}
+      
+      it "return http redirect" do
+        client.should_receive(:gists).and_return([])
+        Octokit::Client.should_receive(:new).and_return(client)
+        get :sync, {}, {user: gist_object.user.id}
+        expect(response).to be_redirect
+      end
+
+      it "Gist#save! should be called" do
+        gist_mock = double("gist mock").as_null_object
+        gist_mock.should_receive(:save!).exactly(3)
+        gist_mock.stub(:description).and_return("old content")
+        client.should_receive(:gists).and_return([{id: 1}, {id: 2}, {id: 3}])
+        Octokit::Client.should_receive(:new).and_return(client)
+        Gist.stub(:where).and_return([gist_mock])
+        get :sync, {}, {user: gist_object.user.id}
+      end
+
+      it "Gist.create_with_octokit should be called" do
+        client.should_receive(:gists).and_return([{id: 1}, {id: 2}, {id: 3}])
+        Octokit::Client.should_receive(:new).and_return(client)
+        Gist.stub(:where).and_return([false])
+        Gist.should_receive(:create_with_octokit).exactly(3)
+        get :sync, {}, {user: gist_object.user.id}
+      end
+    end
+
+    context "with not sign in" do
+      it "return http 404 if not sign in" do
+        get :sync
         expect(response.status).to eq(404)
       end
     end

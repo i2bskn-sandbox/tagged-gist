@@ -4,7 +4,7 @@ describe Gist do
   def valid_gist
     {
       id: "12345678",
-      description: "i2bskn",
+      description: "MyString",
       html_url: "MyString",
       public: "true"
     }

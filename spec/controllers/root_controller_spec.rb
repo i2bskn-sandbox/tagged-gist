@@ -14,7 +14,7 @@ describe RootController do
         expect(response).to be_success
       end
 
-      it "should not called User#tag_labels" do
+      it "User#tag_labels should not be called" do
         User.any_instance.should_not_receive(:tag_labels)
         get :index
       end
