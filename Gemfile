@@ -29,4 +29,6 @@ group :development, :test do
   gem 'webrat'
   gem 'factory_girl_rails'
   gem 'sqlite3'
+  gem 'coveralls'
+  gem 'simplecov'
 end

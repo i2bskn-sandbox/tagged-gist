@@ -2,6 +2,7 @@ Tagged Gist
 ===========
 
 [![Build Status](https://travis-ci.org/i2bskn/tagged-gist.png?branch=master)](https://travis-ci.org/i2bskn/tagged-gist)
+[![Coverage Status](https://coveralls.io/repos/i2bskn/tagged-gist/badge.png)](https://coveralls.io/r/i2bskn/tagged-gist)
 [![Code Climate](https://codeclimate.com/github/i2bskn/tagged-gist.png)](https://codeclimate.com/github/i2bskn/tagged-gist)
 [![Dependency Status](https://gemnasium.com/i2bskn/tagged-gist.png)](https://gemnasium.com/i2bskn/tagged-gist)
 
