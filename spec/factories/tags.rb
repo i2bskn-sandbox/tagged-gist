@@ -1,9 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :tag do
-    name "MyString"
-    user_id 1
-    gist_id 1
+  factory :tag, class: Tag do
+    name "MyTag"
+    user
+    gist
   end
 end
