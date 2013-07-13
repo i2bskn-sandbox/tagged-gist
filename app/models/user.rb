@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
 
   def update_with_omniauth(auth)
     update_attributes!(
-      uid: auth[:uid],
       nickname: auth[:info][:nickname],
       email: auth[:info][:email],
       image_url: auth[:info][:image],

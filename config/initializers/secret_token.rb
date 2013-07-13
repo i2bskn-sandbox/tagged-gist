@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-TaggedGist::Application.config.secret_key_base = '1403ff6447012fb7ef1cc53d21a36935171f132130489d4d457cea155197005dbdf1f0c42507f8d73c5c3bcd2d179426f87e0c1d7ef4a8b52f79e23368e6305a'
+TaggedGist::Application.config.secret_key_base = ENV['RAILS_SECRET_KEY']

@@ -9,6 +9,8 @@ SimpleCov.start do
   add_filter "/vendor/"
 end
 
+ENV['RAILS_SECRET_KEY'] = "5ebe2294ecd0e0f08eab7690d2a6ee69"
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
