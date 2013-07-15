@@ -42,6 +42,7 @@ heroku create
 heroku config:set RAILS_SECRET_KEY=rails_secret_key_base
 heroku config:set GITHUB_KEY=your_app_client_id
 heroku config:set GITHUB_SECRET=your_app_client_secret
+heroku config:set BUNDLE_WITHOUT="development:test"
 git push heroku master
 heroku open
 ```
