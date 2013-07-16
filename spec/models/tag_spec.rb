@@ -32,7 +32,7 @@ describe Tag do
 
     it "should not return nil if exists" do
       t = FactoryGirl.create(:tag)
-      expect(Tag.duplicate?(name: t.name, user: t.user_id, gist: t.gist_id)).to eq(1)
+      expect(Tag.duplicate?(name: t.name, user: t.user_id, gist: t.gist_id)).not_to be_nil
     end
   end
 end
