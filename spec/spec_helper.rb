@@ -4,8 +4,9 @@ Coveralls.wear!
 
 # SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 SimpleCov.start do
-  add_filter "spec"
-  add_filter "vendor"
+  add_filter "/spec/"
+  add_filter "/config/"
+  add_filter "/vendor/"
 end
 
 ENV['RAILS_SECRET_KEY'] = "5ebe2294ecd0e0f08eab7690d2a6ee69"
