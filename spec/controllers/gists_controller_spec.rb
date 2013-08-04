@@ -152,13 +152,14 @@ describe GistsController do
 
   describe "GET sync" do
     context "with sign in" do
+      before {request.env["HTTP_ACCEPT"] = 'application/json'}
       let(:client) {double("client mock").as_null_object}
       
-      it "return http redirect" do
+      it "return http success" do
         client.should_receive(:gists).and_return([])
         Octokit::Client.should_receive(:new).and_return(client)
         get :sync, {}, {user: gist_object.user.id}
-        expect(response).to be_redirect
+        expect(response).to be_success
       end
 
       it "Gist#save! should be called" do
@@ -177,6 +178,12 @@ describe GistsController do
         Gist.stub(:where).and_return([false])
         Gist.should_receive(:create_with_octokit).exactly(3)
         get :sync, {}, {user: gist_object.user.id}
+      end
+
+      it "@status should be a message if exception occurs" do
+        Octokit::Client.should_receive(:new).and_raise("error")
+        get :sync, {}, {user: gist_object.user.id}
+        expect(assigns(:status)).to eq("error")
       end
     end
 
