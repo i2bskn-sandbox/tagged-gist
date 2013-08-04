@@ -41,7 +41,7 @@
 <% if @current_user %>
   <ul class="nav nav-pills">
     <li><a href="<%= @current_user.github_url %>" target="_blank"><i class="icon-user"></i> <%= @current_user.nickname %></a></li>
-    <li><a id="sync_button" href="#"><span id="sync_icon"><i class="icon-refresh"></i></span> Sync Gist</a></li>
+    <li><a id="sync_button" href="javascript:void(0)"><span id="sync_icon"><i class="icon-refresh"></i></span> Sync Gist</a></li>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="icon-tags"></i> Tags<b class="caret"></b>

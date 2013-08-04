@@ -19,10 +19,13 @@
 (function(){
   $(function(){
     $("#sync_button").on("click", function(){
+      $("#sync_icon").empty();
+      var loading_icon = $("<img>").attr("src", "/img/sync.gif");
+      $("#sync_icon").append(loading_icon);
+
       $.ajax({
         type: 'GET',
         url: '/gists/sync',
-        async: false,
         success: function(data){
           if (data.status === "success"){
             location.reload();
