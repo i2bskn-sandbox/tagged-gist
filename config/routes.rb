@@ -1,7 +1,7 @@
 TaggedGist::Application.routes.draw do
   scope "/gists" do
     controller :gists do
-      get :sync, to: :sync, as: :gists_sync
+      get :sync, to: :sync, as: :gists_sync, defaults: {format: :json}
       post "/:id/tagged", to: :tagged, as: :gists_tagged
       delete "/:id/untagged", to: :untagged, as: :gists_untagged
       get "/:id", to: :show, as: :gists_show

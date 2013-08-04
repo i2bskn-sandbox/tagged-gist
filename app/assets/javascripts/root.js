@@ -1,3 +1,5 @@
-$(function(){
-  $(".check_field").checker("keyup");
-});
+(function(){
+  $(function(){
+    $(".check_field").checker("keyup");
+  });
+})();

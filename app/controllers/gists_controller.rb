@@ -37,26 +37,29 @@ class GistsController < ApplicationController
 
   # GET /gists/sync
   def sync
-    client = Octokit::Client.new(
-      login: @current_user.nickname,
-      oauth_token: @current_user.access_token
-    )
+    begin
+      client = Octokit::Client.new(
+        login: @current_user.nickname,
+        oauth_token: @current_user.access_token
+      )
 
-    Gist.transaction do
-      client.gists.each do |g|
-        local_gist = Gist.where(gid: g[:id]).first
-        if local_gist
-          if local_gist.description != g[:description]
-            local_gist.description = g[:description]
-            local_gist.save!
+      Gist.transaction do
+        client.gists.each do |g|
+          local_gist = Gist.where(gid: g[:id]).first
+          if local_gist
+            if local_gist.description != g[:description]
+              local_gist.description = g[:description]
+              local_gist.save!
+            end
+          else
+            Gist.create_with_octokit(g, @current_user)
           end
-        else
-          Gist.create_with_octokit(g, @current_user)
         end
       end
+      @status = "success"
+    rescue => e
+      @status = e.message
     end
-
-    redirect_to root_path
   end
 
   private

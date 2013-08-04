@@ -15,3 +15,22 @@
 //= require bootstrap.min
 //= require jquery.checker
 //= require_tree .
+
+(function(){
+  $(function(){
+    $("#sync_button").on("click", function(){
+      $.ajax({
+        type: 'GET',
+        url: '/gists/sync',
+        async: false,
+        success: function(data){
+          if (data.status === "success"){
+            location.reload();
+          } else {
+            alert(data.status);
+          };
+        }
+      });
+    });
+  });
+})();
