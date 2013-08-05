@@ -2,6 +2,17 @@ class Gist < ActiveRecord::Base
   has_many :tags, dependent: :destroy
   belongs_to :user
 
+  def owner?(user)
+    self.user == user
+  end
+
+  def get_tag(name)
+    self.tags.each do |tag|
+      return tag if tag.name == name
+    end
+    return nil
+  end
+
   class << self
     def create_with_octokit(octokit_gist, user)
       create! do |g|
