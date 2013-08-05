@@ -6,7 +6,11 @@
     <div class="well">
       <h5><%= link_to "Gist: #{g.gid}", gists_show_path(g) %></h5>
       <% g.tags.each do |tag| %>
-      <span class="label label-info"><i class="icon-tag icon-white"></i> <%= tag.name %></span>
+      <a href="/?tag=<%= tag.name %>">
+        <span class="label label-info">
+          <i class="icon-tag icon-white"></i> <%= tag.name %>
+        </span>
+      </a>
       <% end %>
       <p><%= g.description %></p>
 
