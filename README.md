@@ -26,11 +26,22 @@ Web application to tag the Gists.
 export RAILS_SECRET_KEY=rails_secret_key_base
 ```
 
-#### GitHub Application config
+#### GitHub Application Key
 
 ```
 export GITHUB_KEY=your_app_client_id
 export GITHUB_SECRET=your_app_client_secret
+```
+
+#### Database Settings
+
+Only development/test environments.
+
+```
+export RAILS_DB_USER=user_name
+export RAILS_DB_PASSWORD=password
+export RAILS_DB_HOST=localhost
+export RAILS_DB_PORT=5432
 ```
 
 ## Deproyment instructions
