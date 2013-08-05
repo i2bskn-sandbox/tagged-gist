@@ -25,9 +25,9 @@ describe GistsController do
     end
 
     context "with not sign in" do
-      it "return http 404 if not sign in" do
+      it "return http 500 if not sign in" do
         get :show, {id: gist_object.id}
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(500)
       end
     end
 
@@ -38,78 +38,67 @@ describe GistsController do
         expect(response.status).to eq(404)
       end
 
-      it "return http 404 if othor user's private gist" do
+      it "return http 500 if othor user's private gist" do
         g = FactoryGirl.create(:gist)
         g.update_attributes!(public_gist: false)
         get :show, {id: g.id}, {user: gist_object.user.id}
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(500)
       end
     end
   end
 
   describe "POST tagged" do
+    before {request.env["HTTP_ACCEPT"] = 'application/json'}
+
     context "with sign in" do
       it "requested tag should be created" do
-        g = gist_object
         expect {
-          post :tagged, {id: g.id, name: "MyString"}, {user: g.user.id}
+          post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
         }.to change(Tag, :count).by(1)
       end
 
-      it "return http redirect" do
-        post :tagged, {id: gist_object.id, name: "MyString"}, {user: gist_object.user.id}
-        expect(response).to be_redirect
+      it "return http success" do
+        post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
+        expect(response).to be_success
       end
 
-      it "should redirect to root_path" do
-        post :tagged, {id: gist_object.id, name: "MyString"}, {user: gist_object.user.id}
-        expect(response).to redirect_to(root_path)
+      it "return success message" do
+        post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
+        expect(assigns(:status)).to eq("Success")
       end
 
       it "new tag should not created if invalid name" do
-        g = gist_object
         expect {
-          post :tagged, {id: g.id, name: "invalid_name_of_tag_over_20_characters"}, {user: g.user.id}
+          post :tagged, {name: "invalid_name_of_tag_over_20_characters", gist_id: gist_object.id}, {user: gist_object.user.id}
         }.not_to change(Tag, :count)
-      end
-
-      it "return http redirect if invalid name" do
-        post :tagged, {id: gist_object.id, name: "invalid_name_of_tag_over_20_characters"}, {user: gist_object.user.id}
-        expect(response).to be_redirect
-      end
-
-      it "should redirect to root_path if invalid name" do
-        post :tagged, {id: gist_object.id, name: "invalid_name_of_tag_over_20_characters"}, {user: gist_object.user.id}
-        expect(response).to redirect_to(root_path)
       end
     end
 
     context "with not sign in" do
-      it "return http 404 if not sign in" do
-        post :tagged, {id: gist_object.id, name: "MyString"}
-        expect(response.status).to eq(404)
+      it "return http 500 if not sign in" do
+        post :tagged, {name: "Ruby", gist_id: gist_object.id}
+        expect(response.status).to eq(500)
       end
     end
 
     context "with bad request" do
-      it "return http 404 if not exists gist" do
+      it "return not found message if not exists gist" do
         Gist.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
-        post :tagged, {id: 1, name: "MyString"}, {user: gist_object.user.id}
-        expect(response.status).to eq(404)
+        post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
+        expect(assigns(:status)).to eq("Gist not found")
       end
 
       it "return http 404 if othor user's gist" do
-        g = FactoryGirl.create(:gist)
-        post :tagged, {id: g.id, name: "MyString"}, {user: gist_object.user.id}
-        expect(response.status).to eq(404)
+        Gist.any_instance.should_receive(:owner?).and_return(false)
+        post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
+        expect(assigns(:status)).to eq("Permission denied")
       end
     end
   end
 
   describe "DELETE untagged" do
     before {request.env["HTTP_ACCEPT"] = 'application/json'}
-    let(:gist_o) {FactoryGirl.create(:gist)}
-    let!(:tag) {Tag.create!(name: "Ruby", gist_id: gist_o.id, user_id: gist_o.user.id)}
+    let!(:tag) {Tag.create!(name: "Ruby", gist_id: gist_object.id, user_id: gist_object.user.id)}
 
     context "with sign in" do
       it "request tag should be deleted" do
@@ -122,14 +111,19 @@ describe GistsController do
         delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
         expect(response).to be_success
       end
+
+      it "return success message" do
+        delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
+        expect(assigns(:status)).to eq("Success")
+      end
     end
 
     context "with not sign in" do
-      it "return http 404 if not sign in" do
+      it "return http 500 if not sign in" do
         expect {
           delete :untagged, {name: tag.name, gist_id: tag.gist.id}
         }.not_to change(Tag, :count)
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(500)
       end
 
       it "Tag.where should not called" do
@@ -191,9 +185,9 @@ describe GistsController do
     end
 
     context "with not sign in" do
-      it "return http 404 if not sign in" do
+      it "return http 500 if not sign in" do
         get :sync
-        expect(response.status).to eq(404)
+        expect(response.status).to eq(500)
       end
     end
   end

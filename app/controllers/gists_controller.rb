@@ -1,30 +1,40 @@
 class GistsController < ApplicationController
   before_action :require_signin
-  before_action :require_gist_exists, except: [:sync, :untagged]
 
   # GET /gists/1
   def show
-    if !@gist.public_gist && @gist.user != @current_user
+    begin
+      @gist = Gist.find(params[:id])
+
+      if !@gist.public_gist && @gist.user != @current_user
+        render file: "#{Rails.root}/public/500.html", status: 500, layout: false and return
+      end
+
+      @tags = @current_user.tag_labels
+    rescue ActiveRecord::RecordNotFound
       render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
     end
-
-    @tags = @current_user.tag_labels
   end
 
-  # POST /gists/1/tagged
+  # POST /gists/tagged
   def tagged
-    if @gist.user != @current_user
-      render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
-    end
+    begin
+      @gist = Gist.find(params[:gist_id])
 
-    tag = Tag.new(name: params[:name])
-    tag.user = @current_user
-    tag.gist = @gist
-
-    if tag.save
-      redirect_to root_path, notice: "The tagging of gist is successful."
-    else
-      redirect_to root_path, alert: tag.errors.full_messages.first
+      if @gist.owner? @current_user
+        @tag = Tag.new(name: params[:name])
+        @tag.user = @current_user
+        @tag.gist = @gist
+        if @tag.save
+          @status = "Success"
+        else
+          @status = @tag.errors.full_messages.first
+        end
+      else
+        @status = "Permission denied"
+      end
+    rescue ActiveRecord::RecordNotFound
+      @status = "Gist not found"
     end
   end
 
@@ -32,6 +42,7 @@ class GistsController < ApplicationController
   def untagged
     begin
       @gist = Gist.find(params[:gist_id])
+
       if @gist.owner? @current_user
         @tag = @gist.get_tag(params[:name])
         @tag.destroy if @tag
@@ -68,15 +79,6 @@ class GistsController < ApplicationController
       @status = "success"
     rescue => e
       @status = e.message
-    end
-  end
-
-  private
-  def require_gist_exists
-    begin
-      @gist = Gist.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: "#{Rails.root}/public/404.html", status: 404, layout: false and return
     end
   end
 end
