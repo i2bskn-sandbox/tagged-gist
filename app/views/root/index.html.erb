@@ -17,7 +17,11 @@
       <% end %>
 
       <% if @current_tag %>
-      <p><%= link_to "Untagging #{@current_tag}", gists_untagged_path(id: g.id, name: @current_tag), method: :delete, data: {confirm: "Are you sure?"} %></p>
+      <div class="untagged">
+        <a class="untagged_button" href="javascript:void(0)">Untagged <%= @current_tag %></a>
+        <input type="hidden" class="name" name="name" value="<%= @current_tag %>">
+        <input type="hidden" class="gist_id" name="gist_id" value="<%= g.id %>">
+      </div>
       <% end %>
 
       <%= link_to "Gist", g.html_url, target: "_blank" %>

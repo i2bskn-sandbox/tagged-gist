@@ -107,45 +107,48 @@ describe GistsController do
   end
 
   describe "DELETE untagged" do
-    let!(:tag) {FactoryGirl.create(:tag)}
+    before {request.env["HTTP_ACCEPT"] = 'application/json'}
+    let(:gist_o) {FactoryGirl.create(:gist)}
+    let!(:tag) {Tag.create!(name: "Ruby", gist_id: gist_o.id, user_id: gist_o.user.id)}
 
     context "with sign in" do
       it "request tag should be deleted" do
         expect {
-          delete :untagged, {id: tag.gist.id, name: tag.name}, {user: tag.user.id}
+          delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
         }.to change(Tag, :count).by(-1)
       end
 
-      it "return http redirect" do
-        delete :untagged, {id: tag.gist.id, name: tag.name}, {user: tag.user.id}
-        expect(response).to be_redirect
-      end
-
-      it "should redirect to root_path" do
-        delete :untagged, {id: tag.gist.id, name: tag.name}, {user: tag.user.id}
-        expect(response).to redirect_to(root_path)
+      it "return http success" do
+        delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
+        expect(response).to be_success
       end
     end
 
     context "with not sign in" do
       it "return http 404 if not sign in" do
         expect {
-          delete :untagged, {id: tag.gist.id, name: tag.name}
+          delete :untagged, {name: tag.name, gist_id: tag.gist.id}
         }.not_to change(Tag, :count)
         expect(response.status).to eq(404)
       end
 
       it "Tag.where should not called" do
         Tag.should_not_receive(:where)
-        delete :untagged, {id: tag.gist.id, name: tag.name}
+        delete :untagged, {name: tag.name, gist_id: tag.gist.id}
       end
     end
 
     context "with bad request" do
-      it "return http 404 if not exists gist" do
+      it "return not found message if not exists gist" do
         Gist.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
-        delete :untagged, {id: tag.gist.id, name: tag.name}, {user: tag.user.id}
-        expect(response.status).to eq(404)
+        delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
+        expect(assigns(:status)).to eq("Gist not found")
+      end
+
+      it "return denied message if permission denied" do
+        Gist.any_instance.should_receive(:owner?).and_return(false)
+        delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
+        expect(assigns(:status)).to eq("Permission denied")
       end
     end
   end

@@ -1,6 +1,6 @@
 class GistsController < ApplicationController
   before_action :require_signin
-  before_action :require_gist_exists, except: [:sync]
+  before_action :require_gist_exists, except: [:sync, :untagged]
 
   # GET /gists/1
   def show
@@ -28,11 +28,20 @@ class GistsController < ApplicationController
     end
   end
 
-  # DELETE /gists/1/untagged
+  # DELETE /gists/untagged
   def untagged
-    tag = Tag.where("user_id = :uid AND gist_id = :gid AND name = :name", {uid: @current_user.id, gid: @gist.id, name: params[:name]})
-    tag.first.destroy
-    redirect_to root_path, notice: "The untagging of gist is successful."
+    begin
+      @gist = Gist.find(params[:gist_id])
+      if @gist.owner? @current_user
+        @tag = @gist.get_tag(params[:name])
+        @tag.destroy if @tag
+        @status = "Success"
+      else
+        @status = "Permission denied"
+      end
+    rescue ActiveRecord::RecordNotFound
+      @status = "Gist not found"
+    end
   end
 
   # GET /gists/sync
