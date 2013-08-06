@@ -11,7 +11,7 @@ describe GistsController do
         tag
       end
 
-      it "return http success" do
+      it "returns http success" do
         expect(response).to be_success
       end
 
