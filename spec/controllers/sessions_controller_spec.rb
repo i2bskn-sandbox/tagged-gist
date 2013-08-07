@@ -15,7 +15,7 @@ describe SessionsController do
         get :create
       end
 
-      it "return http redirect" do
+      it "returns http redirect" do
         expect(response).to be_redirect
       end
 
@@ -36,7 +36,7 @@ describe SessionsController do
         get :create
       end
 
-      it "return http redirect" do
+      it "returns http redirect" do
         expect(response).to be_redirect
       end
 

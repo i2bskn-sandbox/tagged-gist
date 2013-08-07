@@ -30,7 +30,7 @@ describe RootController do
         tags
       end
 
-      it "return http success" do
+      it "returns http success" do
         get :index, {}, valid_session
         expect(response).to be_success
       end

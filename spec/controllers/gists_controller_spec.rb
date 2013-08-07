@@ -25,20 +25,20 @@ describe GistsController do
     end
 
     context "with not sign in" do
-      it "return http 500 if not sign in" do
+      it "returns http 500 if not sign in" do
         get :show, {id: gist_object.id}
         expect(response.status).to eq(500)
       end
     end
 
     context "with bad request" do
-      it "return http 404 if not exists gist" do
+      it "returns http 404 if not exists gist" do
         Gist.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
         get :show, {id: 1}, {user: gist_object.user.id}
         expect(response.status).to eq(404)
       end
 
-      it "return http 500 if othor user's private gist" do
+      it "returns http 500 if othor user's private gist" do
         g = FactoryGirl.create(:gist)
         g.update_attributes!(public_gist: false)
         get :show, {id: g.id}, {user: gist_object.user.id}
@@ -57,12 +57,12 @@ describe GistsController do
         }.to change(Tag, :count).by(1)
       end
 
-      it "return http success" do
+      it "returns http success" do
         post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
         expect(response).to be_success
       end
 
-      it "return success message" do
+      it "returns success message" do
         post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
         expect(assigns(:status)).to eq("Success")
       end
@@ -75,20 +75,20 @@ describe GistsController do
     end
 
     context "with not sign in" do
-      it "return http 500 if not sign in" do
+      it "returns http 500 if not sign in" do
         post :tagged, {name: "Ruby", gist_id: gist_object.id}
         expect(response.status).to eq(500)
       end
     end
 
     context "with bad request" do
-      it "return not found message if not exists gist" do
+      it "returns not found message if not exists gist" do
         Gist.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
         post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
         expect(assigns(:status)).to eq("Gist not found")
       end
 
-      it "return http 404 if othor user's gist" do
+      it "returns http 404 if othor user's gist" do
         Gist.any_instance.should_receive(:owner?).and_return(false)
         post :tagged, {name: "Ruby", gist_id: gist_object.id}, {user: gist_object.user.id}
         expect(assigns(:status)).to eq("Permission denied")
@@ -107,19 +107,19 @@ describe GistsController do
         }.to change(Tag, :count).by(-1)
       end
 
-      it "return http success" do
+      it "returns http success" do
         delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
         expect(response).to be_success
       end
 
-      it "return success message" do
+      it "returns success message" do
         delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
         expect(assigns(:status)).to eq("Success")
       end
     end
 
     context "with not sign in" do
-      it "return http 500 if not sign in" do
+      it "returns http 500 if not sign in" do
         expect {
           delete :untagged, {name: tag.name, gist_id: tag.gist.id}
         }.not_to change(Tag, :count)
@@ -139,7 +139,7 @@ describe GistsController do
         expect(assigns(:status)).to eq("Gist not found")
       end
 
-      it "return denied message if permission denied" do
+      it "returns denied message if permission denied" do
         Gist.any_instance.should_receive(:owner?).and_return(false)
         delete :untagged, {name: tag.name, gist_id: tag.gist.id}, {user: tag.user.id}
         expect(assigns(:status)).to eq("Permission denied")
@@ -152,7 +152,7 @@ describe GistsController do
       before {request.env["HTTP_ACCEPT"] = 'application/json'}
       let(:client) {double("client mock").as_null_object}
       
-      it "return http success" do
+      it "returns http success" do
         client.should_receive(:gists).and_return([])
         Octokit::Client.should_receive(:new).and_return(client)
         get :sync, {}, {user: gist_object.user.id}
@@ -185,7 +185,7 @@ describe GistsController do
     end
 
     context "with not sign in" do
-      it "return http 500 if not sign in" do
+      it "returns http 500 if not sign in" do
         get :sync
         expect(response.status).to eq(500)
       end
