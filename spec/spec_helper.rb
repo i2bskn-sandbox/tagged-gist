@@ -1,13 +1,12 @@
 require 'simplecov'
 require 'coveralls'
-Coveralls.wear!
+Coveralls.wear!('rails')
 
-# SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
-SimpleCov.start do
-  add_filter "/spec/"
-  add_filter "/config/"
-  add_filter "/vendor/"
-end
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start
 
 ENV['RAILS_SECRET_KEY'] = "5ebe2294ecd0e0f08eab7690d2a6ee69"
 
