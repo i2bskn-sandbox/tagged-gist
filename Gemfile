@@ -25,6 +25,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-doc'
   gem 'pry-rails'
+  gem 'spring'
   gem 'rspec-rails'
   gem 'webrat'
   gem 'factory_girl_rails'
