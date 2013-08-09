@@ -51,8 +51,10 @@
     $(".check_field").checker("keyup");
 
     $(".tagged-visible").on("click", function(){
+      var field = $(this).parent("li").children("div.tagged");
       $(this).css("display", "none");
-      $(this).parent("li").children("div.tagged").css("display", "block");
+      field.css("display", "block");
+      field.find(".name").focus();
       vg.vgrefresh();
     });
 
@@ -76,7 +78,7 @@
           });
           $("li.public").each(function(){
             $(this).show();
-          })
+          });
           break;
         case "private":
           $("li.public").each(function(){
