@@ -12,13 +12,15 @@
         </span>
       </a>
       <% end %>
+      <a class="tagged-visible" href="javascript:void(0)" style="display:inline;"><i class="icon-plus"></i></a>
       <p><%= g.description %></p>
 
-      <div class="tagged">
+      <div class="tagged" style="display:none;">
         <form class="form-inline">
           <input class="input-small check_field name" name="name" placeholder="Tag Name" required="required" type="text">
           <input type="hidden" class="gist_id" name="gist_id" value="<%= g.id %>">
           <a class="btn btn-small tagged_button" disabled="disabled" href="javascript:void(0)">Tagging</a>
+          <a class="tagged-hide" href="javascript:void(0)"><i class="icon-minus"></i></a>
         </form>
       </div>
 

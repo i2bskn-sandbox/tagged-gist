@@ -1,9 +1,9 @@
 (function(){
   $(function(){
     $(".tagged_button").on("click", function(){
-      var field = $(this).parent("div.tagged");
-      var tag_name = field.children(".name").val();
-      var gist_id = field.children(".gist_id").val();
+      var field = $(this).parents("div.tagged");
+      var tag_name = field.find(".name").val();
+      var gist_id = field.find(".gist_id").val();
 
       $.ajax({
         type: "POST",
@@ -21,9 +21,9 @@
     });
 
     $(".untagged_button").on("click", function(){
-      var field = $(this).parent("div.untagged");
-      var tag_name = field.children(".name").val();
-      var gist_id = field.children(".gist_id").val();
+      var field = $(this).parents("div.untagged");
+      var tag_name = field.find(".name").val();
+      var gist_id = field.find(".gist_id").val();
 
       $.ajax({
         type: "POST",
