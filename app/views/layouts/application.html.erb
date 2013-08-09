@@ -53,6 +53,7 @@
         <% end %>
       </ul>
     </li>
+    <% if request.path == root_path %>
     <li class="pull-right">
       <form class="form-inline">
       <div class="badge badge-info">Filter</div>
@@ -63,6 +64,7 @@
       </select>
       </form>
     </li>
+    <% end %>
   </ul>
 
   <%= yield %>
