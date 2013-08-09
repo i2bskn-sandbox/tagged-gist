@@ -53,6 +53,16 @@
         <% end %>
       </ul>
     </li>
+    <li class="pull-right">
+      <form class="form-inline">
+      <div class="badge badge-info">Filter</div>
+      <select id="filter">
+        <option value="all">All</option>
+        <option value="public">Public only</option>
+        <option value="private">Private only</option>
+      </select>
+      </form>
+    </li>
   </ul>
 
   <%= yield %>

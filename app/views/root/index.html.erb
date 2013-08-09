@@ -2,7 +2,7 @@
 <% if @gists.count > 0 %>
 <ul id="grid-content">
 <% @gists.each do |g| %>
-  <li>
+  <li class="gist <%= public_attribute(g) %>">
       <h5><%= link_to "Gist: #{g.gid}", gists_show_path(g) %></h5>
     
       <% g.tags.each do |tag| %>

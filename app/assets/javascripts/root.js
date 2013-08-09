@@ -23,5 +23,34 @@
       $(this).parents("li").children("a.tagged-visible").css("display", "inline");
       vg.vgrefresh();
     });
+
+    $("#filter").on("change", function(){
+      var filter = $(this).val();
+      switch (filter) {
+        case "all":
+          $("li.gist").each(function(){
+            $(this).show();
+          });
+          break;
+        case "public":
+          $("li.private").each(function(){
+            $(this).hide();
+          });
+          $("li.public").each(function(){
+            $(this).show();
+          })
+          break;
+        case "private":
+          $("li.public").each(function(){
+            $(this).hide();
+          });
+          $("li.private").each(function(){
+            $(this).show();
+          });
+          break;
+      };
+
+      vg.vgrefresh();
+    });
   });
 })();
