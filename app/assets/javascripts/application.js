@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap.min
 //= require jquery.checker
+//= require jquery.easing.1.3
+//= require jquery.vgrid.min
 //= require_tree .
 
 (function(){

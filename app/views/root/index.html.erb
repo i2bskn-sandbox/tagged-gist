@@ -1,10 +1,10 @@
 <% if @current_user %>
 <% if @gists.count > 0 %>
-<ul class="thumbnails">
+<ul id="grid-content">
 <% @gists.each do |g| %>
-  <li class="span4">
-    <div class="well">
+  <li>
       <h5><%= link_to "Gist: #{g.gid}", gists_show_path(g) %></h5>
+    
       <% g.tags.each do |tag| %>
       <a href="/?tag=<%= tag.name %>">
         <span class="label label-info">
@@ -20,7 +20,7 @@
       <input type="hidden" class="gist_id" name="gist_id" value="<%= g.id %>">
       <a class="btn btn-small tagged_button" disabled="disabled" href="javascript:void(0)">Tagging</a>
       </div>
-    </form>
+      </form>
 
       <% if @current_tag %>
       <div class="untagged">
@@ -31,7 +31,6 @@
       <% end %>
 
       <%= link_to "Gist", g.html_url, target: "_blank" %>
-    </div>
   </li>
 <% end %>
 </ul>

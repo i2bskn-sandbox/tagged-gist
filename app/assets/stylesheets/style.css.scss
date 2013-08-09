@@ -7,6 +7,17 @@ a {
   text-decoration: none;
 }
 
+ul#grid-content {
+  list-style-type: none;
+
+  li {
+    width: 330px;
+    background-color: #E0F8FF;
+    margin: 10px;
+    padding: 5px;
+  }
+}
+
 .navbar-inner {
   background: #fff;
   border: 0;
