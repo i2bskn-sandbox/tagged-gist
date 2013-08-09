@@ -14,13 +14,13 @@
       <% end %>
       <p><%= g.description %></p>
 
-      <form class="form-inline">
       <div class="tagged">
-      <input class="input-small check_field name" name="name" placeholder="Tag Name" required="required" type="text">
-      <input type="hidden" class="gist_id" name="gist_id" value="<%= g.id %>">
-      <a class="btn btn-small tagged_button" disabled="disabled" href="javascript:void(0)">Tagging</a>
+        <form class="form-inline">
+          <input class="input-small check_field name" name="name" placeholder="Tag Name" required="required" type="text">
+          <input type="hidden" class="gist_id" name="gist_id" value="<%= g.id %>">
+          <a class="btn btn-small tagged_button" disabled="disabled" href="javascript:void(0)">Tagging</a>
+        </form>
       </div>
-      </form>
 
       <% if @current_tag %>
       <div class="untagged">

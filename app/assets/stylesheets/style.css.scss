@@ -13,8 +13,12 @@ ul#grid-content {
   li {
     width: 330px;
     background-color: #E0F8FF;
+    border-radius: 5px;
+    border: 1px solid #D3D3D3;
     margin: 10px;
-    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
   }
 }
 
