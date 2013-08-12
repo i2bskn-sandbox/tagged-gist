@@ -5,7 +5,7 @@ class RootController < ApplicationController
       if params[:tag].nil?
         @gists = @current_user.gists.includes(:tags)
       else
-        @gists = Gist.joins(:tags).where("tags.user_id = :uid AND tags.name = :name", {uid: @current_user.id, name: params[:tag]})#.includes(:tags)
+        @gists = Gist.joins(:tags).where("tags.user_id = :uid AND tags.name = :name", {uid: @current_user.id, name: params[:tag]})
         @current_tag = params[:tag]
       end
       @tags = @current_user.tag_labels

@@ -3,11 +3,8 @@ class User < ActiveRecord::Base
   has_many :tags, dependent: :destroy
 
   def tag_labels
-    labels = Set.new
-    tags.each do |tag|
-      labels.add(tag.name)
-    end
-    labels.to_a
+    # tags.inject(Set.new){|labels,tag| labels.add(tag.name)}.to_a
+    Tag.where(user_id: self.id).pluck(:name).uniq
   end
 
   def update_with_omniauth(auth)
