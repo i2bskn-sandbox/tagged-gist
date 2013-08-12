@@ -63,7 +63,19 @@ describe User do
     end
   end
 
-  describe "#update_with_omniauth" do
+  describe "#gists_from_tag" do
+    it "returns gists" do
+      tag = FactoryGirl.create(:tag)
+      expect(tag.user.gists_from_tag(tag.name)).to eq([tag.gist])
+    end
+
+    it "returns nil if don't exists tag" do
+      user = FactoryGirl.create(:user)
+      expect(user.gists_from_tag("not_exists")).to be_nil
+    end
+  end
+
+  describe ".update_with_omniauth" do
     let!(:user) {FactoryGirl.create(:user)}
 
     it "nickname should be updated" do

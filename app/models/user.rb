@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
       access_token: auth[:credentials][:token]
     )
   end
+
+  def gists_from_tag(name)
+    ids = Tag.where("user_id = ? AND name = ?", self.id, name).pluck(:gist_id)
+    ids.empty? ? nil : Gist.where("id IN (?)", ids)
+  end
   
   class << self
     def create_with_omniauth(auth)
