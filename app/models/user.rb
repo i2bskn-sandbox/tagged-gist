@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   def gists_from_tag(name)
     ids = Tag.where("user_id = ? AND name = ?", self.id, name).pluck(:gist_id)
-    ids.empty? ? nil : Gist.where("id IN (?)", ids)
+    Gist.where("id IN (?)", ids)
   end
   
   class << self

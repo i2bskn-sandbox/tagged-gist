@@ -69,9 +69,9 @@ describe User do
       expect(tag.user.gists_from_tag(tag.name)).to eq([tag.gist])
     end
 
-    it "returns nil if don't exists tag" do
+    it "returns empty if don't exists tag" do
       user = FactoryGirl.create(:user)
-      expect(user.gists_from_tag("not_exists")).to be_nil
+      expect(user.gists_from_tag("not_exists")).to be_empty
     end
   end
 
