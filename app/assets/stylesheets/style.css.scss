@@ -1,5 +1,5 @@
 body {
-  padding: 10px;
+  padding: 60px;
 }
 
 a {
@@ -22,10 +22,12 @@ ul#grid-content {
   }
 }
 
-.navbar-inner {
+span.label {
+  margin-right: 5px;
+}
+
+.navbar {
   background: #fff;
-  border: 0;
-  box-shadow: none;
 }
 
 footer .footer-border {

@@ -10,80 +10,71 @@
 </head>
 
 <body>
-<header>
-  <div class="container">
-  <div class="row">
-  <div class="span12">
-  <div class="navbar">
-  <div class="navbar-inner">
-    <%= link_to "Tagged Gist", root_path, class: "brand" %>
-    <ul class="nav pull-right">
-      <% if @current_user %>
-      <li><%= link_to "Sign out", signout_path %></li>
-      <% else %>
-      <li><%= link_to "Sign in with GitHub", "/auth/github" %></li>
-      <% end %>
-    </ul>
-  </div>
-  </div>
-  </div>
-  </div>
-  </div>
+<header class="container">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-toggle="collapse" data-target=".target">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to "Tagged Gist", root_path, class: "navbar-brand" %>
+    </div>
+    <div class="collapse navbar-collapse target">
+      <ul class="nav navbar-nav">
+        <% if @current_user %>
+        <li><a href="<%= @current_user.github_url %>" target="_blank"><i class="glyphicon glyphicon-user"></i> <%= @current_user.nickname %></a></li>
+        <li><a id="sync_button" href="javascript:void(0)"><span id="sync_icon"><i class="glyphicon glyphicon-refresh"></i></span> Sync Gist</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-tags"></i> Tags<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/"><i class="glyphicon glyphicon-tag"></i> All</a></li>
+            <% @tags.each do |tag| %>
+            <li><a href="<%= root_path(tag: tag) %>"><i class="glyphicon glyphicon-tag"></i> <%= tag %></a></li>
+            <% end %>
+          </ul>
+        </li>
+        <% end %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if @current_user %>
+        <li><%= link_to "Sign out", signout_path %></li>
+        <% else %>
+        <li><%= link_to "Sign in with GitHub", "/auth/github" %></li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
 </header>
 
 <%= render partial: "shared/notice" %>
 <%= render partial: "shared/alert" %>
 
 <div class="container">
-<div class="row">
-<div class="span12">
 
 <% if @current_user %>
-  <ul class="nav nav-pills">
-    <li><a href="<%= @current_user.github_url %>" target="_blank"><i class="icon-user"></i> <%= @current_user.nickname %></a></li>
-    <li><a id="sync_button" href="javascript:void(0)"><span id="sync_icon"><i class="icon-refresh"></i></span> Sync Gist</a></li>
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        <i class="icon-tags"></i> Tags<b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a href="/"><i class="icon-tag"></i> All</a></li>
-        <% @tags.each do |tag| %>
-        <li><a href="<%= root_path(tag: tag) %>"><i class="icon-tag"></i> <%= tag %></a></li>
-        <% end %>
-      </ul>
-    </li>
-    <% if request.path == root_path %>
-    <li class="pull-right">
-      <form class="form-inline">
-      <div class="badge badge-info">Filter</div>
-      <select id="filter">
-        <option value="all">All</option>
-        <option value="public">Public only</option>
-        <option value="private">Private only</option>
-      </select>
-      </form>
-    </li>
-    <% end %>
-  </ul>
+  <% if request.path == root_path %>
+  <form class="form-inline">
+    <i class="glyphicon glyphicon-filter"></i>
+    <select id="filter">
+      <option value="all">All</option>
+      <option value="public">Public only</option>
+      <option value="private">Private only</option>
+    </select>
+  </form>
+  <% end %>
 
   <%= yield %>
 <% else %>
 <h1>Please sign in.</h1>
 <% end %>
 </div>
-</div>
-</div>
 
-<footer>
-  <div class="container">
+<footer class="container">
   <div class="footer-border"></div>
-  <div class="row">
-  <div class="span12">
-    <p class="copylight">Created <a href="https://github.com/i2bskn" target="_blank">i2bskn</a></p>
-  </div>
-  </div>
-  </div>
+  <p class="copylight">Created <a href="https://github.com/i2bskn" target="_blank">i2bskn</a></p>
 </footer>
 
 </body>

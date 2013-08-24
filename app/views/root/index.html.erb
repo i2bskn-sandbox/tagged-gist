@@ -8,19 +8,19 @@
       <% g.tags.each do |tag| %>
       <a href="/?tag=<%= tag.name %>">
         <span class="label label-info">
-          <i class="icon-tag icon-white"></i> <%= tag.name %>
+          <i class="glyphicon glyphicon-tag"></i> <%= tag.name %>
         </span>
       </a>
       <% end %>
-      <a class="tagged-visible" href="javascript:void(0)" style="display:inline;"><i class="icon-plus"></i></a>
+      <a class="tagged-visible" href="javascript:void(0)" style="display:inline;"><i class="glyphicon glyphicon-plus"></i></a>
       <p><%= g.description %></p>
 
       <div class="tagged" style="display:none;">
         <form class="form-inline">
           <input class="input-small check_field name" name="name" placeholder="Tag Name" required="required" type="text">
           <input type="hidden" class="gist_id" name="gist_id" value="<%= g.id %>">
-          <a class="btn btn-small tagged_button" disabled="disabled" href="javascript:void(0)">Tagging</a>
-          <a class="tagged-hide" href="javascript:void(0)"><i class="icon-minus"></i></a>
+          <a class="btn btn-default btn-sm tagged_button" disabled="disabled" href="javascript:void(0)">Tagging</a>
+          <a class="tagged-hide" href="javascript:void(0)"><i class="glyphicon glyphicon-minus"></i></a>
         </form>
       </div>
 
