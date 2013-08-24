@@ -55,18 +55,7 @@
 <div class="container">
 
 <% if @current_user %>
-  <% if request.path == root_path %>
-  <form class="form-inline">
-    <i class="glyphicon glyphicon-filter"></i>
-    <select id="filter">
-      <option value="all">All</option>
-      <option value="public">Public only</option>
-      <option value="private">Private only</option>
-    </select>
-  </form>
-  <% end %>
-
-  <%= yield %>
+<%= yield %>
 <% else %>
 <h1>Please sign in.</h1>
 <% end %>

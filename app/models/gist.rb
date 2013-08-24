@@ -19,7 +19,7 @@ class Gist < ActiveRecord::Base
         g.gid = octokit_gist[:id]
         g.description = octokit_gist[:description]
         g.public_gist = octokit_gist[:public]
-        g.html_url = octokit_gist[:html_url]
+        g.html_url = "https://gist.github.com/#{user.nickname}/#{octokit_gist[:id]}"
         g.embed_url = "https://gist.github.com/#{user.nickname}/#{octokit_gist[:id]}.js"
         g.user_id = user.id
       end

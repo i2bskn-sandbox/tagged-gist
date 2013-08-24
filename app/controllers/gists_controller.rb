@@ -58,14 +58,11 @@ class GistsController < ApplicationController
   # GET /gists/sync
   def sync
     begin
-      client = Octokit::Client.new(
-        login: @current_user.nickname,
-        oauth_token: @current_user.access_token
-      )
+      client = Octokit::Client.new access_token: @current_user.access_token
+      client.login
 
       Gist.transaction do
         client.gists.each do |g|
-          logger.info(g.inspect)
           local_gist = Gist.where(gid: g[:id]).first
           if local_gist
             if local_gist.description != g[:description]

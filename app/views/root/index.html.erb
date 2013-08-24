@@ -1,5 +1,14 @@
 <% if @current_user %>
 <% if @gists.count > 0 %>
+<form class="form-inline">
+  <i class="glyphicon glyphicon-filter"></i>
+  <select id="filter">
+    <option value="all">All</option>
+    <option value="public">Public only</option>
+    <option value="private">Private only</option>
+  </select>
+</form>
+
 <ul id="grid-content">
 <% @gists.each do |g| %>
   <li class="gist <%= g.public_gist ? 'public' : 'private' %>">
@@ -37,8 +46,6 @@
 <% end %>
 </ul>
 <% else %>
-<div class="span12">
-  <p class="text-error">Gists are not synchronized. Please click Sync Gist or register Gist.</p>
-</div>
+<p class="text-error">Gists are not synchronized or not found.</p>
 <% end %>
 <% end %>
