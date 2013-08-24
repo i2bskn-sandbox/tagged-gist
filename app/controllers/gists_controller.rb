@@ -65,6 +65,7 @@ class GistsController < ApplicationController
 
       Gist.transaction do
         client.gists.each do |g|
+          logger.info(g.inspect)
           local_gist = Gist.where(gid: g[:id]).first
           if local_gist
             if local_gist.description != g[:description]
