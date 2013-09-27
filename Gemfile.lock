@@ -83,8 +83,8 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
-    octokit (2.1.2)
-      sawyer (~> 0.5.0)
+    octokit (2.2.0)
+      sawyer (~> 0.5.1)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
@@ -144,7 +144,7 @@ GEM
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    sawyer (0.5.0)
+    sawyer (0.5.1)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
     sdoc (0.3.20)
@@ -170,7 +170,7 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
-    tins (0.10.0)
+    tins (0.11.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
