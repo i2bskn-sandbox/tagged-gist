@@ -25,14 +25,14 @@ describe Tag do
   end
 
   describe ".duplicate?" do
-    it "should return nil if not exists" do
+    it "should return false if not exists" do
       g = FactoryGirl.create(:gist)
-      expect(Tag.duplicate?(name: "not_exists", user: g.user.id, gist: g.id)).to be_nil
+      expect(Tag.duplicate?(name: "not_exists", user: g.user.id, gist: g.id)).to be_false
     end
 
-    it "should not return nil if exists" do
+    it "should return true if exists" do
       t = FactoryGirl.create(:tag)
-      expect(Tag.duplicate?(name: t.name, user: t.user_id, gist: t.gist_id)).not_to be_nil
+      expect(Tag.duplicate?(name: t.name, user: t.user_id, gist: t.gist_id)).to be_true
     end
   end
 end
